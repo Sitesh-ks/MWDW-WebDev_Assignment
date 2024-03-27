@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update XML Data</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Capture form submission event
+    $('#updateForm').submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+        
+        // Retrieve data entered in the form fields
+        var newData = {
+            name: $('#name').val(),
+            email: $('#email').val(),
+            // Add more fields as needed
+        };
+        
+        // Make AJAX request to update XML file
+        $.ajax({
+            url: 'update_xml.php', // Change this to the path of your server-side script
+            type: 'POST',
+            data: newData,
+            success: function(response) {
+                // Display success message
+                $('#successMessage').text(response);
+            },
+            error: function(xhr, status, error) {
+                // Display error message if update fails
+                $('#errorMessage').text('Error updating data: ' + error);
+            }
+        });
+    });
+});
+</script>
+</head>
+<body>
+
+<h2>Update XML Data</h2>
+
+<form id="updateForm">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br><br>
+    
+    <label for="email">Email:</label><br>
+    <input type="text" id="email" name="email"><br><br>
+    
+    <!-- Add more fields as needed -->
+    
+    <button type="submit">Submit</button>
+</form>
+
+<p id="successMessage"></p>
+<p id="errorMessage"></p>
+
+</body>
+</html>

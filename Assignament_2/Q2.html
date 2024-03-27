@@ -1,0 +1,32 @@
+<body>
+
+    <label for="emailInput">Enter Email:</label>
+    <input type="text" id="emailInput" placeholder="Enter your email">
+    
+    <button id="checkButton">Check Email</button>
+    
+    <div id="output"></div>
+    
+    <script>
+    
+        const emailInput = document.getElementById("emailInput");
+        const outputDiv = document.getElementById("output");
+        const checkButton = document.getElementById("checkButton");
+    
+        checkButton.addEventListener("click", function() {
+            let email = emailInput.value;
+            let response = "";
+            let emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g
+    
+            if (!emailRegex.test(email)) {
+                response = "Invalid Email";
+                outputDiv.style.color = "red";
+            } else {
+                response = "Valid Email";
+                outputDiv.style.color = "green";
+            }
+    
+            outputDiv.textContent = response;
+        });
+    
+    </script>

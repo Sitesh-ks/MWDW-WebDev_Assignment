@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filter XML Data</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function filterXMLData() {
+    // Retrieve user input for filtering criteria
+    var filterCriteria = $('#filterInput').val().toLowerCase(); // assuming filter input is a text input
+    
+    // Make AJAX request to fetch data from the XML API
+    $.ajax({
+        url: 'xml_data_api_endpoint', // Replace 'xml_data_api_endpoint' with the actual URL of the XML API
+        type: 'GET',
+        dataType: 'xml',
+        success: function(response) {
+            var filteredResults = [];
+            
+            // Parse the XML response
+            $(response).find('item').each(function() {
+                var item = $(this);
+                
+                // Filter the data based on user input
+                var dataToFilter = item.find('tag_to_filter').text().toLowerCase(); // Adjust 'tag_to_filter' accordingly
+                if (dataToFilter.includes(filterCriteria)) {
+                    filteredResults.push({
+                        // Depending on your XML structure, you may need to extract different values here
+                        // For example:
+value1: item.find('tag1').text(),
+value2: item.find('tag2').text(),
+                        // ...
+                    });
+                }
+            });
+            
+            // Display the filtered results on the webpage
+            displayFilteredResults(filteredResults);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data: ' + error);
+        }
+    });
+}
+
+function displayFilteredResults(results) {
+    // Clear previous results
+    $('#filteredResults').empty();
+    
+    // Display filtered results on the webpage
+    results.forEach(function(result) {
+        // Create HTML elements to display each result
+        var resultElement = $('<div></div>').addClass('result');
+        
+        // Append result data to the result element
+        // For example:
+resultElement.append($('<p></p>').text('Value 1: ' + result.value1));
+resultElement.append($('<p></p>').text('Value 2: ' + result.value2));
+        
+        // Append result element to the container
+        $('#filteredResults').append(resultElement);
+    });
+}
+</script>
+</head>
+<body>
+
+<h2>Filter XML Data</h2>
+
+<label for="filterInput">Filter Criteria:</label><br>
+<input type="text" id="filterInput" name="filterInput"><br><br>
+
+<button onclick="filterXMLData()">Filter</button>
+
+<div id="filteredResults"></div>
+
+</body>
+</html>

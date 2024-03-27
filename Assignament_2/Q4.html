@@ -1,0 +1,22 @@
+<body>
+    <h2>XML Data</h2>
+    <div id="xmlData"></div>
+
+    <script>
+        function fetchXMLData() {
+            var xhr = new XMLHttpRequest();
+            var url = "example.xml";
+            xhr.open("GET", url, true);
+            xhr.responseType = "document";
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    var xmlDoc = xhr.responseXML;
+                    var data = xmlDoc.getElementsByTagName("data")[0].childNodes[0].nodeValue;
+                    document.getElementById("xmlData").innerHTML = "<p>" + data + "</p>";
+                } else {
+                    document.getElementById("xmlData").innerHTML = "<p>Error fetching XML data</p>";
+                }
+            };
+            xhr.send();
+        }
+        fetchXMLData();

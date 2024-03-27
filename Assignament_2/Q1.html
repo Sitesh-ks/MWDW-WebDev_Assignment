@@ -1,0 +1,35 @@
+<p>Original Text:</p>
+<p id="output">This is a sample text to demonstrate string replacement.</p>
+
+<label for="replaceString">String to replace:</label>
+<input type="text" id="replaceString" placeholder="Enter string to replace">
+
+<label for="replacementChars">Replacement characters:</label>
+<input type="text" id="replacementChars" placeholder="Enter replacement characters">
+
+<button id="replaceButton">Replace</button>
+
+<script>
+const outputElement = document.getElementById("output");
+    const replaceStringInput = document.getElementById("replaceString");
+    const replacementCharsInput = document.getElementById("replacementChars");
+    const replaceButton = document.getElementById("replaceButton");
+
+    replaceButton.addEventListener("click", lookup);
+    function lookup() {
+        
+        let s = outputElement.textContent;
+        let rt = replaceStringInput.value;
+        let replacement = replacementCharsInput.value;
+
+        let regex = new RegExp(rt, 'g');
+        
+        if (s.match(regex)) {
+            s = s.replace(regex, replacement);
+            outputElement.textContent = s;
+        } else {
+            alert("No matches found.");
+        }
+    }
+
+</script>
